@@ -30,3 +30,40 @@ Link: http://steve-jansen.github.io/guides/windows-batch-scripting/part-1-gettin
     - No way, just print debugging messages via ECHO command.
   }
 }
+2.Variables: {
+  2.1.Variable Declaration: Not required
+  2.2.Variable Assignment: {
+    - SET foo=bar -> OK
+    SET foo = bar -> KO, no whitespace here
+    - SET /A four=2+2 (/A:arithmetic)
+  }
+  2.3.Reading the Value of a Variable: {
+    ECHO %foo%
+  }
+  2.4.Listing Existing Variables: {
+    - SET command without argument
+  }
+  2.5.Variable Scope (Global vs Local): {
+    - SETLOCAL
+    - ENDLOCAL
+  }
+  2.6.Special Variables:
+  2.7.Command Line Arguments to Your Script: {
+    - %0: the script file name
+    - %1: the first argument
+      ...
+    - %9: the ninth argument
+  }
+  2.8.Tricks with Command Line Arguments: {
+    - %~1: removes quotes from the 1st command line argument(useful for file path)
+    - %~f1: full path to the folder of the first command line argument
+    - %~fs1: DOS8.3 short name path of %~f1
+    - %~dp1: full path to the parent folder of the 1st command line argument
+    - %~nx1: file name and file extension of the 1st command line argument
+  }
+  2.9.Some Final Polish: {
+    - SETLOCAL ENABLEEXTENSIONS
+    - SET me=%~n0
+    - SET parent=%~dp0
+  }
+}
