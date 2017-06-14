@@ -67,3 +67,25 @@ Link: http://steve-jansen.github.io/guides/windows-batch-scripting/part-1-gettin
     - SET parent=%~dp0
   }
 }
+3.Return Codes: {
+  3.1.Return Code Conventions: {
+    - return 0: execution succeeds
+    - return non-zero: execution fails
+  }
+  3.2.Checking Return Codes in your script Commands: {
+    - %ERRORLEVEL%: contains the return code of the LAST executed program or script.
+  }
+  3.3.Conditional Execution Using the Return Code: {
+    - To execute a follow-on command after sucess, we use the && operator:
+      + SomeCommand.exe && ECHO SomeCommand.ext succeeded!
+    - To execute a follow-on command after failure, we use the || operator:
+      + SomeCommand.exe || ECHO SomeCommand.exe failed with return code %ERRORLEVEL%:
+        * SomeCommand.exe || EXIT /B 1
+        * SomeCommand.exe || GOTO :EOF
+  }
+  3.4.Tips and Tricks for Return Codes: {
+    SET /A ERROR_HELP_SCREEN=1
+    SET /A ERROR_FILE_NOT_FOUND=2
+  }
+  3.5.Some Final Polish
+}
