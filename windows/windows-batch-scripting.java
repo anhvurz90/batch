@@ -147,6 +147,26 @@ Link: http://steve-jansen.github.io/guides/windows-batch-scripting/part-1-gettin
     - IF /I "%ERRORLEVEL%" NEQ "0" (
         ECHO execution failed
       )
-  }
-  
+  } 
 }
+6.Loops: {
+  6.1.Old School with GOTO: {
+    :args
+    SET arg=%~1
+    ECHO %arg%
+    SHIFT
+    GOTO :args
+  }
+  6.2.New School with FOR: {
+    - Note: %I and %%I
+    - Looping Through Files:
+        FOR %I IN (%USERPROFILE%\*) DO @ECHO %I
+    - Looping Through Directories:
+        FOR /D %I IN (%USERPROFILE%\*) DO @ECHO %I
+    - Recursively loop through files in all subfolders of the %TEMP% folder:
+        FOR /R "%TEMP%" %I IN (*) DO @ECHO %I
+    - Recursively loop through all subfolders in the %TEMP% folder:
+        FOR /R "%TEMP%" /D %I IN (*) DO @ECHO %I
+  }
+}
+
