@@ -205,4 +205,24 @@ Link: http://steve-jansen.github.io/guides/windows-batch-scripting/part-1-gettin
     - The caller reads %ERRORLEVEL% to get the exit code
   }
 }
+8.Parsing Input: {
+  8.1.The Easy Way to read Command Line Arguments: {
+    SET filepath=%~f1
+    IF NOT EXIST "%filepath%" (
+      ECHO %~n0: file not found - %filepath% >&2
+      EXIT /B 1
+    )
+  }
+  8.2.Optional paramters: {
+    SET filepath=%dp0\default.txt
+
+    :: the first parameter is an optional filepath
+    IF EXIST "%~f1" SET filepath=%~f1
+  }
+  8.3.Reading user input: {
+    :confirm
+    SET /P "Continue [y/n]" %confirm%
+    FINDSTR /I "^(y|n|yes|no)$" > NUL || GOTO: confirm
+  }
+}
 
