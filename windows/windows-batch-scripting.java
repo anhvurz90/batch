@@ -169,4 +169,40 @@ Link: http://steve-jansen.github.io/guides/windows-batch-scripting/part-1-gettin
         FOR /R "%TEMP%" /D %I IN (*) DO @ECHO %I
   }
 }
+7.Functions: {
+  - CALL keyword
+  - The function needs to be defined as a labels at the bottom of the script
+  - The main logic of your script must have a 'EXIT /B [errorcode]' statement. This keeps your main logic from falling through into your functions
+  7.1.Define a Function: {
+    @ECHO OFF
+    SETLOCAL
+    
+    :: script global variables
+    SET me=%~n0
+    SET log=%TEMP%\%me%.txt
+    
+    :: The "main" logic of the script
+    IF EXIST "%log%" DELETE /Q %log% > NUL
+    
+    :: do something cool, then log it
+    CALL :tee "%me%: Hello, world!"
+
+    :: force execution to quit at the end of the "main" logic
+    EXIT /B %ERRORLEVEL%
+
+    :: a function to write to a log file and write to stdout
+    :tee
+    ECHO %* >> "%log%"
+    ECHO %*
+    EXIT /B 0
+  }
+  7.2.Calling a Function: {
+    - CALL :tee
+    - 'EXIT /B' at the end of the function
+  }
+  7.3.Return values: {
+    - The return value of CALL is always the exit code of the function
+    - The caller reads %ERRORLEVEL% to get the exit code
+  }
+}
 
