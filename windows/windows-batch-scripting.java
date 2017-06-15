@@ -89,3 +89,29 @@ Link: http://steve-jansen.github.io/guides/windows-batch-scripting/part-1-gettin
   }
   3.5.Some Final Polish
 }
+4.Stdin, Stdout, Stderr: {
+  4.1.File Numbers: {
+    - Stdin: 0, stdout: 1, stderr: 2
+  }
+  4.2.Redirection: {
+    - DIR > temp.txt: override
+    - DIR >> temp.txt: append
+    - DIR SomeFile.txt 2>> error.txt: redirect stderr
+    - DIR SomeFile.txt 2>&1: write both stdout & stderr to a single log file
+    - SORT < SomeFile.txt: from stdin
+  }
+  4.3.Suppressing Program Output: {
+    - Use the psedofile NUL:
+      PING 127.0.0.1 > NUL
+  }
+  4.4.Redirecting Program Output As Input to Another Program: {
+    - DIR /B | SORT
+  }
+  4.5.A Coll Party Trick: {
+    - Quick way to create a new text file:
+      TYPE CON > output.txt
+        Hello
+        World!
+      ^Z
+  }
+}
