@@ -115,3 +115,38 @@ Link: http://steve-jansen.github.io/guides/windows-batch-scripting/part-1-gettin
       ^Z
   }
 }
+5.If/Then Conditionals: {
+  5.1.Checking that a File or Folder Exists: {
+    - IF EXIST "temp.txt" ECHO found
+    - IF NOT EXIST "temp.txt" ECHO not found
+    - IF EXIST "temp.txt" (
+        ECHO found
+      ) ELSE (
+        ECHO not found
+      )
+  }
+  5.2.Checking If a Variable Is Not Set: {
+    - IF "%var%"="" (SET var=default value)
+    - IF NOT DEFINED var (SET var=default value)
+  }
+  5.3.Checking If a Variable Matches a Text String: {
+    - SET var=Hello, World!
+      IF "%var%"=="Hello, World!" (
+        ECHO equal
+      )
+    - IF /I "%var%"=="hello, world!"(
+        ECHO equal case insensitive
+      )
+  }
+  5.4.Arithmetic Comparisons: {
+    - SET /A var=1
+      IF /I "%var%" EQU "1" ECHO equality with 1
+      IF /I "%var%" NEQ "0" ECHO inequality with 0
+      IF /I "%var%" GEQ "1" ECHO greater than or equal to 1
+      IF /I "%var%" LEQ "1" ECHO less than or equal to 1
+    - IF /I "%ERRORLEVEL%" NEQ "0" (
+        ECHO execution failed
+      )
+  }
+  
+}
