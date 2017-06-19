@@ -225,4 +225,34 @@ Link: http://steve-jansen.github.io/guides/windows-batch-scripting/part-1-gettin
     FINDSTR /I "^(y|n|yes|no)$" > NUL || GOTO: confirm
   }
 }
+9.Logging: {
+  9.1.Log function: {
+    @ECHO OFF
+    SETLOCAL ENABLEEXTENSIONS
+    
+    :: script global variables
+    SET me=%~n0
+    SET log=%TEMP%\%me%.txt
+
+    :: The "main" logic of the script
+    IF EXIST "%log%" DELETE /Q %log% >NUL
+    
+    :: do something cool, then log it
+    CALL :tee "%me%: Hello, world!"
+    
+    "" force execution to quit at the end of the "main" logic
+    EXIT /B %ERRORLEVEL%
+
+    :: a function to write to a log file and write to stdout 
+    :tee
+    ECHO %* >> "%log%"
+    ECHO %*
+    EXIT /B 0
+  }
+  9.2.Create log file with name equals to current time: {
+    REM create a log file named [script].YYYYMMDDHHMMSS.txt
+    SET log=%TEMP%\%me%.%DATE:~10,4%_%DATE:~4,2%_%DATE:~7,2%%TIME:~0,2%_%TIME:~3,2%_%TIME:~6,2%.txt
+  }
+  9.3.Displaying startup parameters: nothing
+}
 
