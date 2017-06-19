@@ -255,4 +255,38 @@ Link: http://steve-jansen.github.io/guides/windows-batch-scripting/part-1-gettin
   }
   9.3.Displaying startup parameters: nothing
 }
+10.Advanced Tricks: {
+  10.1.Boilplate info: {
+    Create header with ::
+  }
+  10.2.Conditional commands based on success/failure: {
+    The conditional operators || and && provide a convenient shorthand method to run a 2nd command based on the success or failure of a 1st command
+    - DIR myfile.txt >NUL 2>&1 && TYPE myfile.txt
+    - DIR myfile.txt >NUL 2>&1 || CALL :WARNING file not found - myfile.txt
+    - DIR myfile.txt >NUL 2>&1 || (ECHO %me%: WARNING - file not found - myfile.txt >2 && EXIT /B 1)
+  }
+  10.3.Getting the full path to the parent directory of the script: {
+    :: variables
+    PUSHD "%~dp0" >NUL && SET root=%CD% && POPD >NUL
+  }
+  10.4.Making a script sleep for N seconds: {
+    Use PING to fake a real *nix style sleep command
+    :: sleep for 2 seconds:
+    PING.EXE -N 2 127.0.0.1 > NUL
+  }
+  10.5.Supporting "double-click" execution ( aka invoking from Windows Explorer): {
+    Test if %CMDCMDLINE% is equal to %COMSPEC%. If yes - in an interactive session. If no - PAUSE at the end of the script to show the output:
+    
+    @ECHO OFF
+    SET interactive=0
+
+    ECHO $CMDCMDLINE% | FINDSTR /L %COMSPEC% >NUL 2>&1
+    IF %ERRORLEVEL% == 0 SET interactive=1
+
+    ECHO do work
+
+    IF "%interactive%"=="0" PAUSE
+    EXIT /B 0
+  }
+}
 
